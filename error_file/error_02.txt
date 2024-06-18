@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_02.py", line 4, in <module>
+    li[6]
+    ~~^^^
+IndexError: list index out of range

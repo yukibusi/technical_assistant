@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_10.py", line 3, in <module>
+    result = 10 / 0
+             ~~~^~~
+ZeroDivisionError: division by zero
