@@ -1,0 +1,17 @@
+生原因:
+Traceback (most recent call last):
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_07.py", line 3, in <module>
+    import nonexistent_module
+
+生エラー:
+ModuleNotFoundError: No module named 'nonexistent_module'
+
+要約原因:
+import nonexistent_moduleの部分が原因です。
+
+要約エラー:
+nonexistent_module という名前のモジュールが見つかりません。
+
+解決策:
+モジュールの存在やインポートしようとしているモジュールのパスが正しいかを確認してください。
+それでも解決しない場合は、もしプロジェクトが仮想環境内で実行されている場合、モジュールがその環境にインストールされていることを確認して下さい。
