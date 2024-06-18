@@ -1,0 +1,27 @@
+生原因:
+Traceback (most recent call last):
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_04.py", line 8, in <module>
+    print(factorial(1000))
+          ^^^^^^^^^^^^^^^
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_04.py", line 7, in factorial
+    return n * factorial(n-1)
+               ^^^^^^^^^^^^^^
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_04.py", line 7, in factorial
+    return n * factorial(n-1)
+               ^^^^^^^^^^^^^^
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_04.py", line 7, in factorial
+    return n * factorial(n-1)
+               ^^^^^^^^^^^^^^
+  [Previous line repeated 996 more times]
+
+生エラー:
+RecursionError: maximum recursion depth exceeded
+
+要約原因:
+再帰関数が深すぎてスタックオーバーフローが発生したことが原因です。
+
+要約エラー:
+再帰が深くなりすぎて、Pythonで設定された最大再帰深度を超えたためエラーが発生
+
+解決策:
+再帰を避けて、ループを使って同じ処理を実現する。
