@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_09.py", line 4, in <module>
-    numbers.sort(reverse="True")
-TypeError: 'str' object cannot be interpreted as an integer

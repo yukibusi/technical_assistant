@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_06.py", line 3, in <module>
-    number = int("abc")
-             ^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: 'abc'
