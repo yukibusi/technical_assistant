@@ -5,7 +5,7 @@ def _get_all_issues(repo):
     issues = []
     url = f"https://api.github.com/repos/{repo}/issues"
     params = {
-        "state": "all",  # get all issues
+        "state": "closed",  # get closed issues
         "per_page": 100, # Number of issues per page
         "page": 1
     }
