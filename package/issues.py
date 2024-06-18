@@ -50,8 +50,8 @@ def get_text_from_issue(repo):
     for issue in issues:
         issue_url = issue["html_url"]
         comments = _scrape_comments(issue_url)
-        comment = ''.join(comments)
-        if ''.join(comments).startswith('No description provided.') == False:
+        comment = '\n'.join(comments)
+        if comment.startswith('No description provided.') == False:
             all_comments.append((comment, issue_url))
     return all_comments
 
