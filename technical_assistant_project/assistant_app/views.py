@@ -1,13 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from .forms import GitIssueForm, SignUpForm
+from .models import GitIssue
+from django.contrib.auth import login, authenticate
 
 # Create your views here.
+@login_required
 def index(request):
     return render(request, 'index.html')
 
 from django.shortcuts import render
 from django.http import HttpResponse
 
+@login_required
 def memo(request):
     if request.method == 'GET':
         return render(request, 'memo.html')
@@ -22,7 +28,8 @@ def memo(request):
     
     else:
         return HttpResponse('Method Not Allowed', status=405)
-    
+
+@login_required
 def memo_file(request):
     if request.method == 'GET':
         return render(request, 'memo_file.html')
@@ -43,7 +50,8 @@ def memo_file(request):
     
     else:
         return HttpResponse('Method Not Allowed', status=405)
-    
+
+@login_required
 def support(request):
     if request.method == 'GET':
         return render(request, 'support.html')
@@ -58,4 +66,40 @@ def support(request):
     
     else:
         return HttpResponse('Method Not Allowed', status=405)
+
+
+@login_required
+def git_issues(request):
+    if request.method == 'GET':
+        form = GitIssueForm()
+        return render(request, 'git_issues.html', {'form': form})
     
+    elif request.method == 'POST':
+        form = GitIssueForm(request.POST)
+        if form.is_valid():
+            git_issue = form.save(commit=False)
+            git_issue.user = request.user
+            git_issue.save()
+            output_text = '保存が完了しました'
+            return render(request, 'support.html', {'output_text': output_text})
+        else:
+            return render(request, 'git_issues.html', {'form': form})
+    
+    else:
+        return HttpResponse('Method Not Allowed', status=405)
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()  # Load the profile instance created by the signal
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return redirect('index')  # ログイン後にリダイレクトするURL
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
