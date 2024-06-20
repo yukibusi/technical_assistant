@@ -56,7 +56,7 @@ retrieved_docs = retriever.invoke('TypeError: can only concatenate list (not "st
 print(retrieved_docs[0].page_content)
 
 
-memo_rag_llm = ChatOpenAI(model="gpt-4o")
+memo_rag_llm = ChatOpenAI(model="gpt-4o",temperature=0)
 
 
 prompt = ChatPromptTemplate.from_messages(
@@ -189,10 +189,11 @@ rag_chain = (
 
 result = rag_chain.invoke(question + """"フォーマット化する前のメモ:
 Traceback (most recent call last):
-  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_05.py", line 3, in <module>
-    with open("nonexistent_file.txt", "r") as f:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_08.py", line 4, in <module>
+    print(numbers + "4")  # TypeError: can only concatenate list (not "str") to list
+          ~~~~~~~~^~~~~
         
-フォーマット化したメモ:
-""")
+フォーマット化したメモ:""")
 print(result)
+print("==========================================================================================")
+print(result.split("フォーマット化したメモ:")[1].split("フォーマット化する前のメモ:")[0])
