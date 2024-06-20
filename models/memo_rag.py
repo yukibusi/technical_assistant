@@ -75,9 +75,9 @@ with open(fewshot_path) as f:
     fewshot = f.read()
 
 question = """Traceback (most recent call last):
-  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_05.py", line 3, in <module>
-    with open("nonexistent_file.txt", "r") as f:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"""
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_03.py", line 4, in <module>
+    print(personal["mame"])
+          ~~~~~~~~^^^^^^^^"""
 
 result = chain.invoke(fewshot + f"""フォーマット化する前のメモ:\n{question}\n\nフォーマット化したメモ:""")
 print(result)
