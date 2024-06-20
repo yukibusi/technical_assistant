@@ -17,15 +17,35 @@
 
 動かすのに必要なライブラリなどを列挙する（適宜埋めていく）
 
-* huga 3.5.2
-* hogehuga 1.0.2
+* langchain
+* langchain_chroma
+* langchain_community.document_loaders
+* langchain_core.output_parsers
+* langchain_core.runnables
+* langchain_core.prompts
+* langchain_openai
+* langchain_openai
+* langchain_text_splitters
+* dotenv 
 
 # インストール方法
 
 Requirementで列挙したライブラリなどのインストール方法を説明する（適宜埋めていく）
 
+
 ```bash
 pip install huga_package
+
+pip install langchain
+pip install langchain_chroma
+pip install langchain_community.document_loaders
+pip install langchain_core.output_parsers
+pip install langchain_core.runnables
+pip install langchain_core.prompts
+pip install langchain_openai
+pip install langchain_openai
+pip install langchain_text_splitters
+pip install dotenv 
 ```
 
 # 使用方法
