@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .forms import GitIssueForm, SignUpForm
 from .models import GitIssue
 from django.contrib.auth import login, authenticate
+from django.views.generic import ListView
 
 # Create your views here.
 @login_required
@@ -81,7 +82,7 @@ def git_issues(request):
             git_issue.user = request.user
             git_issue.save()
             output_text = '保存が完了しました'
-            return render(request, 'support.html', {'output_text': output_text})
+            return render(request, 'git_issues.html', {'output_text': output_text})
         else:
             return render(request, 'git_issues.html', {'form': form})
     
@@ -103,3 +104,7 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+class Issues_List(ListView):
+    template_name = 'issues_list.html'
+    model = GitIssue
