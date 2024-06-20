@@ -33,11 +33,8 @@ Requirementで列挙したライブラリなどのインストール方法を説
 ```bash
 pip install langchain
 pip install langchain_chroma
-pip install langchain_community.document_loaders
-pip install langchain_core.output_parsers
-pip install langchain_core.runnables
-pip install langchain_core.prompts
-pip install langchain_openai
+pip install langchain_community
+pip install langchain_core
 pip install langchain_openai
 pip install langchain_text_splitters
 pip install dotenv 
