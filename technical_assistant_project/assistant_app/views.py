@@ -33,12 +33,15 @@ def memo(request):
         return render(request, 'memo.html')
     
     elif request.method == 'POST':
-        input_text = request.POST.get('input_text', '')  # Retrieve input text from POST data
+        question =  request.POST.get('input_text', '')  # Retrieve input text from POST data
         
-        # ここで入力テキストのバリデーションや必要な処理を行う（例：データベースへの保存など）
+        api_key = str(dotenv_values()["OPENAI_API_KEY"])
+
+        few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
         
+        output_text = write_formatted_memo(few_shot_path, api_key, question)
         # テンプレートに入力テキストを渡してmemo.htmlを再レンダリング
-        return render(request, 'memo.html', {'input_text': input_text})
+        return render(request, 'memo.html', {'output_text': output_text})
     
     else:
         return HttpResponse('Method Not Allowed', status=405)
