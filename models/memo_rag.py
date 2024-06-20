@@ -120,7 +120,7 @@ def create_vectorstore_and_retriever(added_memo_file_names_dir, database_dir, fo
 
     return vectorstore, retriever
 
-def write_formatted_memo(fewshot_path, openai_api_key, question):
+def write_formatted_memo(fewshot_path, openai_api_key, question, add_to_database=False, added_memo_file_names_dir=None, database_dir=None, formatted_memos_dir=None):
     write_memo_llm = ChatOpenAI(model="gpt-4o",
                                 openai_api_key=OPENAI_API_KEY,
                                 temperature=0)
@@ -148,4 +148,34 @@ def write_formatted_memo(fewshot_path, openai_api_key, question):
     #    ~~^^^"""
 
     result = chain.invoke(fewshot + f"""フォーマット化する前のメモ:\n{question}\n\nフォーマット化したメモ:""")
+
+    if add_to_database:
+        if len(os.listdir(added_memo_file_names_dir)) == 0:
+            added_memo_file_names = set()
+        else:
+            with open(added_memo_file_names_dir + '/added_memo_file_names.pickle', mode='rb') as f:
+                added_memo_file_names = pickle.load(f)
+
+        embedding = OpenAIEmbeddings(
+            model="text-embedding-3-large",
+            openai_api_key=openai_api_key
+        )
+
+        vectorstore = Chroma(persist_directory=database_dir, embedding_function=embedding)
+
+        filename = question[:50].replace("/","").replace('"',"").replace(" ","").replace("\n","").replace("[","").replace("]","").replace(",","").replace("<","").replace(">","").replace(":","") + ".txt"
+        if filename not in added_memo_file_names:
+            vectorstore._collection.add(
+                ids=[str(vectorstore._collection.count()+1)],
+                embeddings=[embedding.embed_query(result)],
+                metadatas=[{"filename": filename}],
+                documents=[result]
+            )
+            added_memo_file_names.add(filename)
+
+        with open(added_memo_file_names_dir + '/added_memo_file_names.pickle', mode='wb') as f:
+            pickle.dump(added_memo_file_names, f)
+        with open(formatted_memos_dir + f"/{filename}", mode='w') as f:
+            f.write(result)
+
     return result
