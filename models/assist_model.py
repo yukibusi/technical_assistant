@@ -31,9 +31,9 @@ def main(error):
     
     assist = rag_chain.invoke(f"以下のエラーの解決方法を教えてください。エラー:{error}")
     
-    return assist
+    return error, assist
 
 if __name__ == "__main__":
     error = input("解決したいエラーを入力してください：")
-    assist = main(error)
+    error, assist = main(error)
     print(assist)
