@@ -5,8 +5,13 @@
     <title>Login</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-image: url(../static/images/login.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: #464646;
+
             margin: 0;
             padding: 0;
             display: flex;
@@ -16,10 +21,10 @@
         }
         .container {
             background: #fff;
-            padding: 20px;
+            padding: 50px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 500px;
             width: 100%;
             text-align: center;
         }
@@ -39,37 +44,37 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
-            background-color: #007bff;
+            background-color: #A5A5A5;
             color: white;
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #007bff;
         }
         .signup-button {
             margin-top: 10px;
             font-size: 14px;
-            color: #007bff;
+            color: #A5A5A5;
             text-decoration: none;
             cursor: pointer;
             transition: color 0.3s ease;
         }
         .signup-button:hover {
-            color: #0056b3;
+            color: #007bff;
         }
     </style>
 </head>
 <body>
+    {% comment %} <h2>テクニカルアシスタント</h2> {% endcomment %}
     <div class="container">
-        <h2>Login</h2>
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Login</button>
         </form>
-        <a href="{% url 'signup' %}" class="signup-button">新規登録はこちら</a>
+        <a href="{% url 'signup' %}" class="signup-button">Click here to register</a>
     </div>
 </body>
 </html>
