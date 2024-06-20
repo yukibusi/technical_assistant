@@ -1,5 +1,5 @@
 #memo_databaseはベクトル化したメモを保存する場所。
 #メモの数が多い場合サイズが大きいためcommitとpushしないほうがよい。
-#/memo_database/
-#/added_memo_file_names/
+memo_database/
+added_memo_file_names/
 .env
