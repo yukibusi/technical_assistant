@@ -1,0 +1,8 @@
+
+<h2>My Groups</h2>
+<ul>
+{% for group in groups %}
+    <li>{{ group.name }} - <a href="{% url 'group_detail' group.id %}">View</a></li>
+{% endfor %}
+</ul>
+

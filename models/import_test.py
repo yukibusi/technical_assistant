@@ -23,7 +23,20 @@ question="""Traceback (most recent call last):
 result = write_formatted_memo(
     fewshot_path="./fewshot.txt",
     openai_api_key=OPENAI_API_KEY,
-    question=question
+    question=question,
+    add_to_database=True,
+    added_memo_file_names_dir="../added_memo_file_names",
+    database_dir="../memo_database",
+    formatted_memos_dir="../error_file_modify",
 )
 
 print(result)
+
+vectorstore, retriever = create_vectorstore_and_retriever(
+    added_memo_file_names_dir="../added_memo_file_names",
+    database_dir="../memo_database",
+    formatted_memos_dir="../error_file_modify",
+    openai_api_key=OPENAI_API_KEY
+)
+
+print(vectorstore._collection.count())

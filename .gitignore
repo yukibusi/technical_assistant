@@ -3,3 +3,28 @@
 memo_database/
 added_memo_file_names/
 .env
+
+# Ignore Python cache files and directories
+__pycache__/
+*.pyc
+
+# Ignore environment directories
+technical_assistant_env/
+
+# Ignore output and log files
+*.out
+
+# Ignore specific files
+make_note/.env_git
+make_note/check_html.py
+make_note/issues2.py
+make_note/setup.py
+make_note/html.out
+make_note/output.out
+
+# Ignore compiled libraries
+*.so
+
+# Ignore specific directories
+technical_assistant_project/assistant_app/__pycache__/
+technical_assistant_project/assistant_app/migrations/

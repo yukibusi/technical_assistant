@@ -6,7 +6,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
-from memo_rag import create_vectorstore_and_retriever, write_formatted_memo
+from .memo_rag import create_vectorstore_and_retriever
 
 
 def format_docs(docs):

@@ -1,12 +1,25 @@
-from django.shortcuts import render, redirect
+import sys
+import os
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .forms import GitIssueForm, SignUpForm
-from .models import GitIssue
+from .forms import GitIssueForm, SignUpForm, GroupForm, GroupItemForm, AddMemberForm, RemoveMemberForm
+from .models import GitIssue, Group, GroupItem
 from django.contrib.auth import login, authenticate
 from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+sys.path.append(os.path.join(os.path.dirname(__file__), 'package'))
+from .utils.assist_model import main
+from .utils.memo_rag import write_formatted_memo
+from dotenv import load_dotenv, dotenv_values
+from technical_assistant_project.settings import BASE_DIR
+
 
 # Create your views here.
+class Issues_List(LoginRequiredMixin, ListView):
+    template_name = 'issues_list.html'
+    model = GitIssue
+
 @login_required
 def index(request):
     return render(request, 'index.html')
@@ -59,11 +72,17 @@ def support(request):
     
     elif request.method == 'POST':
         input_text = request.POST.get('input_text', '')  # Retrieve input text from POST data
-        
-        # ここで入力テキストのバリデーションや必要な処理を行う（例：データベースへの保存など）
-        
+        # env_path = os.path.join('BASE_DIR', 'assistant_app', '.env')
+        # load_dotenv(dotenv_path=env_path)
+        # api_key = os.getenv("OPENAI_API_KEY")
+        api_key = str(dotenv_values()["OPENAI_API_KEY"])
+        added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
+        database_dir = os.path.join(BASE_DIR, 'database')
+        formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+        error = input_text
+        output_text = main(error, api_key, added_memo_file_names_dir, database_dir, formatted_memos_dir)
         # テンプレートに入力テキストを渡してmemo.htmlを再レンダリング
-        return render(request, 'support.html', {'input_text': input_text})
+        return render(request, 'support.html', {'output_text': output_text})
     
     else:
         return HttpResponse('Method Not Allowed', status=405)
@@ -105,6 +124,88 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
-class Issues_List(ListView):
-    template_name = 'issues_list.html'
-    model = GitIssue
+@login_required
+def create_group(request):
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            group = form.save(commit=False)
+            group.created_by = request.user
+            group.save()
+            form.save_m2m()
+            return redirect('group_list')
+    else:
+        form = GroupForm()
+    return render(request, 'create_group.html', {'form': form})
+
+@login_required
+def edit_group(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    if request.user not in group.users.all():
+        return redirect('group_list')
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return redirect('group_list')
+    else:
+        form = GroupForm(instance=group)
+    return render(request, 'edit_group.html', {'form': form})
+
+@login_required
+def group_list(request):
+    groups = Group.objects.filter(users=request.user)
+    return render(request, 'group_list.html', {'groups': groups})
+
+@login_required
+def group_detail(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    items = group.items.all()
+    return render(request, 'group_detail.html', {'group': group, 'items': items})
+
+@login_required
+def add_group_item(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    if request.method == 'POST':
+        form = GroupItemForm(request.POST)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.group = group
+            item.save()
+            return redirect('group_detail', group_id=group_id)
+    else:
+        form = GroupItemForm()
+    return render(request, 'add_group_item.html', {'form': form, 'group': group})
+
+@login_required
+def add_member(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+    if request.method == 'POST':
+        form = AddMemberForm(request.POST)
+        if form.is_valid():
+            users = form.cleaned_data['users']
+            group.users.add(*users)
+            return redirect('group_detail', group_id=group_id)
+    else:
+        form = AddMemberForm()
+    return render(request, 'add_member.html', {'form': form, 'group': group})
+
+@login_required
+def remove_member(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+
+    if request.user != group.created_by:
+        return HttpResponseForbidden("You are not allowed to remove members from this group.")
+
+    if request.method == 'POST':
+        form = RemoveMemberForm(request.POST, group=group)
+        if form.is_valid():
+            users = form.cleaned_data['users']
+            group.users.remove(*users)
+            return redirect('group_detail', group_id=group_id)
+    else:
+        form = RemoveMemberForm(group=group)
+    return render(request, 'remove_member.html', {'form': form, 'group': group})
+
+
+

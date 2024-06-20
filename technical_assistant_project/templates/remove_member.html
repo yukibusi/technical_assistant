@@ -1,0 +1,6 @@
+<h2>Remove Members from {{ group.name }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Remove Members</button>
+</form>

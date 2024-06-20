@@ -11,5 +11,21 @@ class GitIssue(models.Model):
     def __str__(self):
         return self.repo
 
+class Group(models.Model):
+    name = models.CharField(max_length=255)
+    created_by = models.ForeignKey(User, related_name='created_groups', on_delete=models.CASCADE)
+    users = models.ManyToManyField(User, related_name='custom_groups')
+
+    def __str__(self):
+        return self.name
+
+class GroupItem(models.Model):
+    group = models.ForeignKey(Group, related_name='items', on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
 
 
