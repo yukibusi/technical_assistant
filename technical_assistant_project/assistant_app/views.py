@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 sys.path.append(os.path.join(os.path.dirname(__file__), 'package'))
 from .utils.assist_model import main
 from .utils.memo_rag import write_formatted_memo
+from .utils.issues import get_text_from_issue
 from dotenv import load_dotenv, dotenv_values
 from technical_assistant_project.settings import BASE_DIR
 
@@ -38,8 +39,11 @@ def memo(request):
         api_key = str(dotenv_values()["OPENAI_API_KEY"])
 
         few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
-        
-        output_text = write_formatted_memo(few_shot_path, api_key, question)
+        added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
+        database_dir = os.path.join(BASE_DIR, 'database')
+        formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+    
+        output_text = write_formatted_memo(few_shot_path, api_key, question, True, added_memo_file_names_dir, database_dir, formatted_memos_dir)
         # テンプレートに入力テキストを渡してmemo.htmlを再レンダリング
         return render(request, 'memo.html', {'output_text': output_text})
     
@@ -101,9 +105,20 @@ def git_issues(request):
         form = GitIssueForm(request.POST)
         if form.is_valid():
             git_issue = form.save(commit=False)
+            repo = git_issue.repo
+            issues = get_text_from_issue(repo)
+            api_key = str(dotenv_values()["OPENAI_API_KEY"])
+            few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
+            added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
+            database_dir = os.path.join(BASE_DIR, 'database')
+            formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+            for question in issues:
+                output_text = write_formatted_memo(few_shot_path, api_key, question[0], True, added_memo_file_names_dir, database_dir, formatted_memos_dir)
+
             git_issue.user = request.user
             git_issue.save()
             output_text = '保存が完了しました'
+            repo = git_issue.repo()
             return render(request, 'git_issues.html', {'output_text': output_text})
         else:
             return render(request, 'git_issues.html', {'form': form})
