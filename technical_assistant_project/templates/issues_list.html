@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リポジトリ一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>リポジトリ一覧</h1>
+    <ul>
+        {% for item in object_list %}
+            <li>
+                <a href="{{ item.repo_url }}" target="_blank">{{ item.repo }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="button-group">
+        <form method="get" action="{% url 'git_issues' %}">
+            <button type="submit" class="btn btn-secondary">リポジトリを追加</button>
+        </form>
+        <form method="get" action="{% url 'index' %}">
+            <button type="submit" class="btn btn-secondary">インデックスへ戻る</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -19,11 +19,8 @@
 
 * langchain
 * langchain_chroma
-* langchain_community.document_loaders
-* langchain_core.output_parsers
-* langchain_core.runnables
-* langchain_core.prompts
-* langchain_openai
+* langchain_community
+* langchain_core
 * langchain_openai
 * langchain_text_splitters
 * dotenv 
@@ -34,8 +31,6 @@ Requirementで列挙したライブラリなどのインストール方法を説
 
 
 ```bash
-pip install huga_package
-
 pip install langchain
 pip install langchain_chroma
 pip install langchain_community.document_loaders
