@@ -11,12 +11,13 @@
 
 * ある程度のサポートは可能だが、各々のチーム毎にあった環境に対応するサービスは少ない上、Chat GPT等に質問しても完全な解答がかえってくるとは限りません。
 * そこで開発時のトラブルをGitHubのissueなどを有効的に参照することで、より迅速かつ正確な解答をエンジニアに提供可能になります。
-* そのためにRAGという技術を用います。
+* そのためにRAGとLANG CHAINいう技術を用います。
 
 # 必要なライブラリ
 
 動かすのに必要なライブラリなどを列挙する（適宜埋めていく）
 
+* bs4
 * langchain
 * langchain_chroma
 * langchain_community
@@ -24,6 +25,7 @@
 * langchain_openai
 * langchain_text_splitters
 * dotenv 
+* requests
 
 # インストール方法
 
@@ -39,6 +41,7 @@ pip install langchain_core
 pip install langchain_openai
 pip install langchain_text_splitters
 pip install dotenv 
+pip install requests
 ```
 
 # 使用方法
