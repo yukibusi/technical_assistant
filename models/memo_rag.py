@@ -7,7 +7,9 @@ from langchain_chroma import Chroma
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import OpenAIEmbeddings
+from langchain_openai import ChatOpenAI
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from dotenv import dotenv_values
 
@@ -54,17 +56,17 @@ retrieved_docs = retriever.invoke('TypeError: can only concatenate list (not "st
 print(retrieved_docs[0].page_content)
 
 
-memo_rag_llm = ChatOpenAI(model="gpt-4o")
+memo_rag_llm = ChatOpenAI(model="gpt-4o",temperature=0)
 
 
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "{system_prompt}"),
+        ("system", "あなたはソフトウェア開発者です。ユーザーのfewshotを参考に出力してください。"),
         ("human", "{question}"),
     ]
 )
 
-system_prompt = """フォーマット化する前のメモ:
+question = """フォーマット化する前のメモ:
 MNISTをダウンロード・表示させるプログラムである，ch3/mnist_show.pyを実行すると以下のエラーを吐きます．urllib.error.HTTPError: HTTP Error 403: Forbiddendataset/mnist.py内の関数_downloadを以下に変更することで解決しました．def _download(file_name):
 file_path = dataset_dir + "/" + file_name
 
@@ -81,7 +83,7 @@ with open(file_path, mode='wb') as f:
     f.write(response)
 print("Done")DL先のサイトhttp://yann.lecun.com/へのアクセス権限がないことが原因のようです．「ブラウザからのアクセスだよ」と伝えてあげる必要があります．私の場合はヘッダーをFirefoxと偽装することで解決しました．ありがとうございます。コード修正しました。f549a18
 
-
+フォーマット化したメモ:
 生原因:
 なし
 
@@ -114,9 +116,7 @@ def _download(file_name):
     print("Done")
 
 
-###################################################################################################################################################
-
-
+フォーマット化する前のメモ:
 3章のMNIST画像（手書き数字認識のサンプル画像）を表示する部分ですがmnist_show.pyを実行すると% python mnist_show.py
 Traceback (most recent call last):
   File "mnist_show.py", line 6, in <module>
@@ -124,7 +124,7 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'PIL'PILのライブラリが存在しないと言うエラーになります。こちらですがpillowをインストールで解決致しました。pip3 install pillowどこかに補足など頂けると幸いでございます。参考にさせていただたURLhttps://qiita.com/ukwksk/items/483d1b9e525667b77187
 @3panda私も引っかかりissueにあがってないか確認したら、同じように困ってる方がいて自分だけではないということに安心しました。笑どうやら、PIL は開発が中止されてしまい、代わりにそこから枝分かれした、Pillowが使われているようです。https://note.nkmk.me/python-pillow-basic/
 
-
+フォーマット化したメモ:
 生原因:
 Traceback (most recent call last):
   File "mnist_show.py", line 6, in <module>
@@ -143,9 +143,7 @@ PILが存在しないためインポートができない。
 PIL は開発が中止されているので、代わりにそこから枝分かれした、Pillowをインストールして使用してください。
 
 
-###################################################################################################################################################
-
-
+フォーマット化する前のメモ:
 sys.path.append(os.pardir)だと、下記のエラーが出ました。Traceback (most recent call last):
   File "ch05/gradient_check.py", line 5, in <module>
     from dataset.mnist import load_mnist
@@ -155,7 +153,7 @@ import sys
 sys.path.append(os.path.abspath('..'))とすれば，自動的にフルパスで展開してくれます．私の手元の環境は，Ubuntu 16.04Python 3.5.2です．
 from dataset.mnist import load_mnistImportError: No module named 'dataset.mnist'
 
-
+フォーマット化したメモ:
 生原因:
 Traceback (most recent call last):
   File "ch05/gradient_check.py", line 5, in <module>
@@ -175,14 +173,27 @@ datasetディレクトリを見つけることができませんでした。
 import os
 import sys
 sys.path.append(os.path.abspath('..'))
-のようにすれば自動的に絶対パスで展開できます。"""
+のようにすれば自動的に絶対パスで展開できます。
+
+
+"""
+
+
 
 rag_chain = (
-    {"system_prompt": retriever | format_docs, "question": RunnablePassthrough()}
+    {"question": RunnablePassthrough()}
     | prompt
     | memo_rag_llm
     | StrOutputParser()
 )
 
-result = rag_chain.invoke("著者が使ったデータセットのバージョンは？")
+result = rag_chain.invoke(question + """"フォーマット化する前のメモ:
+Traceback (most recent call last):
+  File "/home/ubuntu/group_1_work/technical_assistant/error_check_file_08.py", line 4, in <module>
+    print(numbers + "4")  # TypeError: can only concatenate list (not "str") to list
+          ~~~~~~~~^~~~~
+        
+フォーマット化したメモ:""")
 print(result)
+print("==========================================================================================")
+print(result.split("フォーマット化したメモ:")[1].split("フォーマット化する前のメモ:")[0])
