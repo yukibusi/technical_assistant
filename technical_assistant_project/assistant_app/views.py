@@ -76,18 +76,27 @@ def memo_file(request):
             api_key = str(dotenv_values()["OPENAI_API_KEY"])
 
             few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
-            added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
-            database_dir = os.path.join(BASE_DIR, 'database')
-            formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
-            output_list = []
+
+            if 'team_name' in request.session:
+                team = request.session['team_name']
+                added_memo_file_names_dir = os.path.join(BASE_DIR, f'added_memo_file_names/{team}')
+                database_dir = os.path.join(BASE_DIR, f'database/{team}')
+                formatted_memos_dir = os.path.join(BASE_DIR, f'formatted_memos/{team}')
+            else:
+                added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
+                database_dir = os.path.join(BASE_DIR, 'database')
+                formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+                output_list = []
+
             for question in input_list:
                 output_text = write_formatted_memo(few_shot_path, api_key, question, True, added_memo_file_names_dir, database_dir, formatted_memos_dir)
                 output_list.append(output_text)
+
             output = '<br><br><br>'.join(output_list)
             output = output.replace('\n', '<br>')
             # テンプレートに入力テキストを渡してmemo.htmlを再レンダリング
             return render(request, 'memo_file.html', {'input_text': output})
-        else:
+        else: 
             return HttpResponse('ファイルがアップロードされていません。', status=400)
     
     else:
@@ -100,13 +109,18 @@ def support(request):
     
     elif request.method == 'POST':
         input_text = request.POST.get('input_text', '')  # Retrieve input text from POST data
-        # env_path = os.path.join('BASE_DIR', 'assistant_app', '.env')
-        # load_dotenv(dotenv_path=env_path)
-        # api_key = os.getenv("OPENAI_API_KEY")
         api_key = str(dotenv_values()["OPENAI_API_KEY"])
-        added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
-        database_dir = os.path.join(BASE_DIR, 'database')
-        formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+
+        if 'team_name' in request.session:
+            team = request.session['team_name']
+            added_memo_file_names_dir = os.path.join(BASE_DIR, f'added_memo_file_names/{team}')
+            database_dir = os.path.join(BASE_DIR, f'database/{team}')
+            formatted_memos_dir = os.path.join(BASE_DIR, f'formatted_memos/{team}')
+        else:
+            added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
+            database_dir = os.path.join(BASE_DIR, 'database')
+            formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+
         error = input_text
         output_text = main(error, api_key, added_memo_file_names_dir, database_dir, formatted_memos_dir)
         # テンプレートに入力テキストを渡してmemo.htmlを再レンダリング
@@ -131,9 +145,15 @@ def git_issues(request):
             issues = get_text_from_issue(repo)
             api_key = str(dotenv_values()["OPENAI_API_KEY"])
             few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
-            added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
-            database_dir = os.path.join(BASE_DIR, 'database')
-            formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+            if 'team_name' in request.session:
+                team = request.session['team_name']
+                added_memo_file_names_dir = os.path.join(BASE_DIR, f'added_memo_file_names/{team}')
+                database_dir = os.path.join(BASE_DIR, f'database/{team}')
+                formatted_memos_dir = os.path.join(BASE_DIR, f'formatted_memos/{team}')
+            else:
+                added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
+                database_dir = os.path.join(BASE_DIR, 'database')
+                formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
             for question in issues:
                 output_text = write_formatted_memo(few_shot_path, api_key, question[0], True, added_memo_file_names_dir, database_dir, formatted_memos_dir)
 
@@ -180,6 +200,7 @@ def create_group(request):
             os.makedirs(added_memo_file_names_dir)
             os.makedirs(database_dir)
             os.makedirs(formatted_memos_dir)
+            request.session['team_name'] = team
             return redirect('group_list')
     else:
         form = GroupForm()
