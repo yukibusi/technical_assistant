@@ -73,6 +73,11 @@
           background-color: #5a6268;
           color: white;
       }
+      .link-right {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+    }
     </style>
   </head>
   <body>
@@ -111,7 +116,7 @@
     <!-- ログアウトフォーム -->
     <form method="post" action="{% url 'logout' %}" class="logout-form">
       {% csrf_token %}
-      <button type="submit" class="btn-logout">logout</button>
+      <button type="submit" class="btn-logout link-right">logout</button>
     </form>
   </body>
 </html>

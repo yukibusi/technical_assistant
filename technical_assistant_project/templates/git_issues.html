@@ -86,6 +86,11 @@
             position: relative;
             top: -20px;
         }
+        .link-right {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+        }
     </style>
 </head>
 <body>
@@ -105,9 +110,7 @@
     </div>
 
     <!-- 右上のリンク -->
-    <div class="position-relative m-4">
-        <a href="{% url 'index' %}" class="position-absolute top-0 start-0 btn btn-secondary link-right">Back index</a>
-    </div>
+    <a href="{% url 'index' %}" class="btn btn-secondary link-right">Back index</a>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
