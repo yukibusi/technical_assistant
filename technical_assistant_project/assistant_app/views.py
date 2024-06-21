@@ -23,11 +23,11 @@ class Issues_List(LoginRequiredMixin, ListView):
     model = GitIssue
 
 @login_required
+def home(request):
+    return render(request, 'home.html')
+
+@login_required
 def index(request):
-    if 'team_name' in request.session:
-        print(request.session['team_name'])
-    else:
-        print('None')
     return render(request, 'index.html')
 
 @login_required

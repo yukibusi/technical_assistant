@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Assistance</title>
+  <style>
+    /* Resetting default margins */
+    body, h1, h2, ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Basic styling */
+    body {
+      background-image: url(../static/images/index.png);
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      font-family: 'Yu Gothic UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding: 50px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    li {
+      margin: 0 10px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+      background-color: #fff;
+      padding: 10px 20px;
+      display: block;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .logout {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+    }
+
+    .btn-logout {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn-logout:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+  <div class="logout">
+    <form action="{% url 'logout' %}" method="post" class="logout-form">
+      {% csrf_token %}
+      <button type="submit" class="btn-logout">ログアウト</button>
+    </form>
+  </div>
+
+  <h1>Welcome to Technical Assistance</h1>
+  <ul>
+    <li>
+      <a href="{% url 'create_group' %}">チームを作成</a>
+    </li>
+    <li>
+      <a href="{% url 'login_team' %}">チームにログイン</a>
+    </li>
+    <li>
+      <a href="{% url 'index' %}">ログインせずに使用</a>
+    </li>
+  </ul>
+</body>
+</html>
