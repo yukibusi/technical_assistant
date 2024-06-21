@@ -36,12 +36,18 @@
         margin-bottom: 15px;
       }
       ul {
-        list-style-type: none;
-        padding: 0;
+        display: flex;
+        justify-content: center;
       }
+
       li {
-        margin-bottom: 10px;
+        list-style: none;
       }
+
+      li:nth-child(2) {
+        margin: 0 10px;
+      }
+      
       a {
         text-decoration: none;
         color: #333;
@@ -60,6 +66,7 @@
           margin: 0;
       }
       .btn-logout {
+          width: 10%;
           background-color: #6c757d;
           color: white;
           border: none;
@@ -76,6 +83,11 @@
       .link-right {
         position: absolute;
         top: 30px;
+        left: 30px;
+      }
+      .link-right2 {
+        position: absolute;
+        top: 80px;
         left: 30px;
       }
       .btn-custom {
@@ -97,6 +109,7 @@
           right: 30px;
           top: 30px;
       }
+
     </style>
   </head>
   <body>
@@ -118,24 +131,15 @@
       </li>
     </ul>
 
-    <style>
-      ul {
-        display: flex;
-        justify-content: center;
-      }
-
-      li {
-        list-style: none;
-      }
-
-      li:nth-child(2) {
-        margin: 0 10px;
-      }
-    </style>
     <!-- ログアウトフォーム -->
     <form method="post" action="{% url 'logout' %}" class="logout-form">
       {% csrf_token %}
       <button type="submit" class="btn-logout link-right">Logout</button>
+    </form>
+
+    <form method="post" action="{% url 'home' %}" class="logout-form">
+      {% csrf_token %}
+      <button type="submit" class="btn-logout link-right2">Home</button>
     </form>
 
     <div class="d-flex justify-content-center mt-4 btn-container">

@@ -37,10 +37,11 @@
             background-color: #fff;
             padding: 30px;
             border-radius: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .form-group {
             margin-bottom: 20px;
+            margin: 0px;
         }
         label {
             font-weight: bold;
@@ -107,7 +108,7 @@
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save</button>
-    </form>
+        </form>
 </div>
 </body>
 </html>

@@ -1,17 +1,125 @@
-<h2>{{ group.name }}</h2>
-<p>Created by: {{ group.created_by.username }}</p>
-<p>Members:
-  {% for user in group.users.all %}
-    {{ user.username }}{% if not forloop.last %}, {% endif %}
-  {% endfor %}
-</p>
-<h3>Items</h3>
-<ul>
-  {% for item in items %}
-    <li>{{ item.name }}: {{ item.description }}</li>
-  {% endfor %}
-</ul>
-{% if request.user == group.created_by %}
-  <a href="{% url 'add_member' group.id %}">Add Members</a>
-  <a href="{% url 'remove_member' group.id %}">Remove Members</a>
-{% endif %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>group detail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url(../static/images/index.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: #464646;
+    
+            font-family: Yu Gothic UI Semibold;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            padding: 50px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 70px auto;
+            background-color: #fff;
+            {% comment %} padding: 20px; {% endcomment %}
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            margin: 0px;
+        }
+        label {
+            font-weight: bold;
+            font-size: 20px
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 30px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #A5A5A5;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #007bff;
+        }
+        .result {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+        }
+        .link-right {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+        }
+        .btn-custom {
+            display: button;
+            width: 25%;
+            padding: 5px;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+        .btn-custom:hover {
+            background-color: #777;
+            color: white;
+        }
+        .btn-container {
+            gap: 30px;
+            position: relative;
+            top: -20px;
+        }
+    </style>
+</head>
+<body>
+  <h1>{{ group.name }}</h1>
+  <div class="container">
+  <p>Created by: {{ group.created_by.username }}</p>
+  <p>Members:
+    {% for user in group.users.all %}
+      {{ user.username }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </p>
+  <h3>Items</h3>
+  <ul>
+    {% for item in items %}
+      <li>{{ item.name }}: {{ item.description }}</li>
+    {% endfor %}
+  </ul>
+  {% if request.user == group.created_by %}
+    <a href="{% url 'add_member' group.id %}">Add Members</a>
+    <a href="{% url 'remove_member' group.id %}">Remove Members</a>
+  {% endif %}
+  </div>
+</body>
+</html>

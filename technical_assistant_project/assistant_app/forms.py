@@ -28,14 +28,14 @@ class GroupForm(forms.ModelForm):
         queryset=User.objects.all(),
         required=False,
         widget=forms.CheckboxSelectMultiple,  # チェックボックス形式で複数選択
-        label="ユーザー"  # フィールドのラベルを日本語に変更
+        label="User"  # フィールドのラベルを日本語に変更
     )
 
     class Meta:
         model = Group
         fields = ['name', 'users']
         labels = {
-            'name': 'グループ名',  # フィールドのラベルを日本語に変更
+            'name': 'Group name',  # フィールドのラベルを日本語に変更
         }
 
 class GroupItemForm(forms.ModelForm):

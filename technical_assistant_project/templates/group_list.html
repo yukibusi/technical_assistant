@@ -42,6 +42,7 @@
         }
         li {
           margin-bottom: 10px;
+          text-indent: 10px;
         }
         a {
           text-decoration: none;
@@ -55,24 +56,6 @@
         }
         a:hover {
           background-color: #f0f0f0;
-        }
-        .logout-form {
-            display: inline-block;
-            margin: 0;
-        }
-        .btn-logout {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .btn-logout:hover {
-            background-color: #5a6268;
-            color: white;
         }
         .link-right {
           position: absolute;
@@ -97,16 +80,25 @@
             right: 30px;
             top: 30px;
         }
+        .custom-width-list {
+            width: 800px;
+            margin: 0 auto;
+        }
+        .custom-width-list a {
+            display: block;
+            width: 100%;
+            padding: 8px 0;
+        }
     </style>
 </head>
 <body>
 <h1>My Groups</h1>
-    <div class="container">
-    <ul>
+  <div class="container">
+    <ul class="custom-width-list">
     {% for group in groups %}
         <li>{{ group.name }} - <a href="{% url 'group_detail' group.id %}">View</a></li>
     {% endfor %}
     </ul>
-</div>
+  </div>
 </body>
 </html>
