@@ -74,7 +74,7 @@ def memo_file(request):
             for question in input_list:
                 output_text = write_formatted_memo(few_shot_path, api_key, question, True, added_memo_file_names_dir, database_dir, formatted_memos_dir)
                 output_list.append(output_text)
-            output = '/n/n/n'.join(output_list)
+            output = '<br><br><br>'.join(output_list)
             output = output.replace('\n', '<br>')
             # テンプレートに入力テキストを渡してmemo.htmlを再レンダリング
             return render(request, 'memo_file.html', {'input_text': output})
