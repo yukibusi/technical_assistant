@@ -118,7 +118,7 @@ def git_issues(request):
             git_issue.user = request.user
             git_issue.save()
             output_text = '保存が完了しました'
-            repo = git_issue.repo()
+            repo = git_issue.repo
             return render(request, 'git_issues.html', {'output_text': output_text})
         else:
             return render(request, 'git_issues.html', {'form': form})
