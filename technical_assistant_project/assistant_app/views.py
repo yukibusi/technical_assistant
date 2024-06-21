@@ -44,7 +44,7 @@ def memo(request):
             team = request.session['team_name']
             few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt/')
             added_memo_file_names_dir = os.path.join(BASE_DIR, f'added_memo_file_names/{team}')
-            database_dir = os.path.join(BASE_DIR, 'database')
+            database_dir = os.path.join(BASE_DIR, f'database/{team}')
             formatted_memos_dir = os.path.join(BASE_DIR, f'formatted_memos/{team}')
         else:
             few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
