@@ -7,25 +7,41 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background-image: url(../static/images/index.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: #464646;
+    
+            font-family: Yu Gothic UI Semibold;
             line-height: 1.6;
-            background-color: #f8f9fa;
-            padding: 20px;
+            background-color: #f0f0f0;
+            padding: 50px;
         }
         .container {
+            max-width: 800px;
+            margin: 130px auto;
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h2 {
+            {% comment %} text-align: center; {% endcomment %}
+            {% comment %} margin-bottom: 10px; {% endcomment %}
+            font-size: 15px
+          }
+        form {
             max-width: 600px;
             margin: 0 auto;
             background-color: #fff;
             padding: 30px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            position: relative; /* 追加：相対位置指定 */
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        form {
             margin-bottom: 20px;
         }
         .form-group {
@@ -36,7 +52,7 @@
         }
         input[type="file"] {
             width: 100%;
-            padding: 10px;
+            padding: 30px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -46,14 +62,14 @@
             width: 100%;
             padding: 10px;
             font-size: 16px;
-            background-color: #007bff;
+            background-color: #A5A5A5;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         button[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #007bff;
         }
         .result {
             margin-top: 20px;
@@ -67,20 +83,37 @@
             top: 20px;
             right: 20px;
         }
+        .btn-custom {
+            display: button;
+            width: 30%;
+            {% comment %} padding: 5px; {% endcomment %}
+            font-size: 16px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+        .btn-custom:hover {
+            background-color: #777;
+            color: white;
+        }
+        .btn-container {
+            gap: 30px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Memo</h1>
-        
+    <h1>Text file</h1>
+    <div class="container">        
         <!-- フォーム -->
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-                <label for="txt_file">テキストファイルを選択してください:</label>
+                <label for="txt_file">Select a text file:</label>
+                <h2>When selecting two or more files, please separate them with "\n\n\n".</h2>
                 <input type="file" id="txt_file" name="txt_file" class="form-control-file">
             </div>
-            <button type="submit" class="btn btn-primary">ファイルをアップロード</button>
+            <button type="submit" class="btn btn-primary">Upload file</button>
         </form>
         
         <!-- 入力されたテキストを表示 -->
@@ -91,14 +124,14 @@
         </div>
         {% endif %}
         
-        <!-- インデックスへのリンク -->
-        <div class="mt-4">
-            <a href="{% url 'index' %}" class="btn btn-secondary">インデックスへ戻る</a>
+        <!-- 右上のリンク -->
+        <div class="d-flex justify-content-center mt-4 btn-container">
+            <a href="{% url 'memo' %}" class="btn btn-custom">From text input</a>
         </div>
     </div>
 
     <!-- 右上のリンク -->
-    <a href="{% url 'memo' %}" class="btn btn-secondary link-right">テキスト入力から</a>
+    <a href="{% url 'index' %}" class="btn btn-secondary link-right">Back index</a>
 
     <!-- Bootstrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
