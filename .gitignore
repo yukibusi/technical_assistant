@@ -1,12 +1,26 @@
 #memo_databaseはベクトル化したメモを保存する場所。
 #メモの数が多い場合サイズが大きいためcommitとpushしないほうがよい。
+.gitignore
 memo_database/
 added_memo_file_names/
 .env
+technical_assistant_project/added_memo_file_names/
+technical_assistant_project/database/
+technical_assistant_project/formatted_memos/
+models/test.py
+make_note/make_note/output.txt
+technical_assistant_project/assistant_app/__pycache__/admin.cpython-312.pyc
+technical_assistant_project/assistant_app/__pycache__/forms.cpython-312.pyc
+technical_assistant_project/assistant_app/__pycache__/models.cpython-312.pyc
+technical_assistant_project/assistant_app/__pycache__/models.cpython-312.pyc
+technical_assistant_project/assistant_app/__pycache__/urls.cpython-312.pyc
+technical_assistant_project/assistant_app/__pycache__/views.cpython-312.pyc
+technical_assistant_project/technical_assistant_project/__pycache__/settings.cpython-312.pyc
 
 # Ignore Python cache files and directories
 __pycache__/
 *.pyc
+technical_assistant_project/assistant_app/utils/__pycache__/
 
 # Ignore environment directories
 technical_assistant_env/
