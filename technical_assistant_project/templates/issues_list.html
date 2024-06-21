@@ -91,9 +91,9 @@
 <body>
     <h1>Repository List</h1>
     <ul class="custom-width-list">
-        {% for item in object_list %}
+        {% for repo_url in repos_urls %}
             <li>
-                <a href="{{ item.repo_url }}" target="_blank">{{ item.repo }}</a>
+                <a href="{{ repo_url.1 }}" target="_blank">{{ repo_url.0 }}</a>
             </li>
         {% endfor %}
     </ul>

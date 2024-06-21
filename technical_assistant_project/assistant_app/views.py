@@ -140,7 +140,9 @@ def git_issues(request):
         if form.is_valid():
             git_issue = form.save(commit=False)
             repo = git_issue.repo
-            git_issue.description = f"https://github.com/{repo}/issues"
+            git_issue.url = f"https://github.com/{repo}/issues"
+            # if 'team_name' in request.session:
+            git_issue.team_name = request.session['team_name']
             issues = get_text_from_issue(repo)
             api_key = str(dotenv_values()["OPENAI_API_KEY"])
             few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
@@ -166,6 +168,23 @@ def git_issues(request):
     
     else:
         return HttpResponse('Method Not Allowed', status=405)
+    
+@login_required
+def issues_list(request):
+    team_name = request.session.get('team_name')
+    if not team_name:
+        return redirect('git_issues')
+
+    issues = GitIssue.objects.filter(team_name=team_name)
+    
+    # リポジトリ名とURLのリストを作成
+    repos_urls = [(issue.repo, issue.url) for issue in issues]
+    
+    context = {
+        'repos_urls': repos_urls
+    }
+    
+    return render(request, 'issues_list.html', context)
 
 
 def signup(request):
@@ -291,6 +310,8 @@ def login_team(request):
             messages.error(request, "指定されたチームにはアクセス権限がありません。")
     
     return render(request, 'login_team.html')
+
+
 
 
 
