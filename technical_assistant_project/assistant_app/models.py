@@ -12,7 +12,7 @@ class GitIssue(models.Model):
         return self.repo
 
 class Group(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     created_by = models.ForeignKey(User, related_name='created_groups', on_delete=models.CASCADE)
     users = models.ManyToManyField(User, related_name='custom_groups')
 

@@ -1,0 +1,6 @@
+<form method="post" action="{% url 'login_team' %}">
+    {% csrf_token %}
+    <label for="team_name">チーム名:</label>
+    <input type="text" id="team_name" name="team_name">
+    <button type="submit">ログイン</button>
+</form>

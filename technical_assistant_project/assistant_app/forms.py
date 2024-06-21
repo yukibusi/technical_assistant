@@ -7,7 +7,7 @@ from .models import Group, GroupItem
 class GitIssueForm(forms.ModelForm):
     class Meta:
         model = GitIssue
-        fields = ['repo', 'description']
+        fields = ['repo']
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(max_length=200)

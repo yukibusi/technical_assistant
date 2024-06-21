@@ -2,7 +2,8 @@ import sys
 import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
+from django.contrib import messages
 from .forms import GitIssueForm, SignUpForm, GroupForm, GroupItemForm, AddMemberForm, RemoveMemberForm
 from .models import GitIssue, Group, GroupItem
 from django.contrib.auth import login, authenticate
@@ -23,10 +24,11 @@ class Issues_List(LoginRequiredMixin, ListView):
 
 @login_required
 def index(request):
+    if 'team_name' in request.session:
+        print(request.session['team_name'])
+    else:
+        print('None')
     return render(request, 'index.html')
-
-from django.shortcuts import render
-from django.http import HttpResponse
 
 @login_required
 def memo(request):
@@ -38,10 +40,17 @@ def memo(request):
         
         api_key = str(dotenv_values()["OPENAI_API_KEY"])
 
-        few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
-        added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
-        database_dir = os.path.join(BASE_DIR, 'database')
-        formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+        if 'team_name' in request.session:
+            team = request.session['team_name']
+            few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt/')
+            added_memo_file_names_dir = os.path.join(BASE_DIR, f'added_memo_file_names/{team}')
+            database_dir = os.path.join(BASE_DIR, 'database')
+            formatted_memos_dir = os.path.join(BASE_DIR, f'formatted_memos/{team}')
+        else:
+            few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
+            added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
+            database_dir = os.path.join(BASE_DIR, 'database')
+            formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
     
         output_text = write_formatted_memo(few_shot_path, api_key, question, True, added_memo_file_names_dir, database_dir, formatted_memos_dir)
         # テンプレートに入力テキストを渡してmemo.htmlを再レンダリング
@@ -162,8 +171,15 @@ def create_group(request):
         if form.is_valid():
             group = form.save(commit=False)
             group.created_by = request.user
+            team = group.name
             group.save()
             form.save_m2m()
+            added_memo_file_names_dir = os.path.join(BASE_DIR, f'added_memo_file_names/{team}')
+            database_dir = os.path.join(BASE_DIR, f'database/{team}')
+            formatted_memos_dir = os.path.join(BASE_DIR, f'formatted_memos/{team}')
+            os.makedirs(added_memo_file_names_dir)
+            os.makedirs(database_dir)
+            os.makedirs(formatted_memos_dir)
             return redirect('group_list')
     else:
         form = GroupForm()
@@ -186,6 +202,7 @@ def edit_group(request, group_id):
 @login_required
 def group_list(request):
     groups = Group.objects.filter(users=request.user)
+    print(request.user)
     return render(request, 'group_list.html', {'groups': groups})
 
 @login_required
@@ -237,6 +254,23 @@ def remove_member(request, group_id):
     else:
         form = RemoveMemberForm(group=group)
     return render(request, 'remove_member.html', {'form': form, 'group': group})
+
+@login_required
+def login_team(request):
+    if request.method == 'POST':
+        team_name = request.POST.get('team_name')
+        user = request.user
+        
+        # チーム名とユーザー名でGroupを検索
+        try:
+            group = Group.objects.get(name=team_name, users=user)
+            request.session['team_name'] = team_name  # チーム名をセッションに保存
+            return redirect('index')  # ログイン成功後にダッシュボードにリダイレクト
+        except Group.DoesNotExist:
+            messages.error(request, "指定されたチームにはアクセス権限がありません。")
+    
+    return render(request, 'login_team.html')
+
 
 
 
