@@ -118,6 +118,7 @@ def git_issues(request):
         if form.is_valid():
             git_issue = form.save(commit=False)
             repo = git_issue.repo
+            git_issue.description = f"https://github.com/{repo}/issues"
             issues = get_text_from_issue(repo)
             api_key = str(dotenv_values()["OPENAI_API_KEY"])
             few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
