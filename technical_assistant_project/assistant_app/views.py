@@ -60,12 +60,24 @@ def memo_file(request):
         if 'txt_file' in request.FILES:
             txt_file = request.FILES['txt_file']
             # ファイルの内容を読み込む
-            input_text = txt_file.read().decode('utf-8')
+            input_text = txt_file.read().decode('utf-8').replace('\r\n', '\n').replace('\r', '\n')
             
-            # ここで必要な処理を行う（例：入力テキストのバリデーション、データベースへの保存など）
-            
+            input_list = input_text.split('\n\n\n')
+
+            api_key = str(dotenv_values()["OPENAI_API_KEY"])
+
+            few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
+            added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
+            database_dir = os.path.join(BASE_DIR, 'database')
+            formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
+            output_list = []
+            for question in input_list:
+                output_text = write_formatted_memo(few_shot_path, api_key, question, True, added_memo_file_names_dir, database_dir, formatted_memos_dir)
+                output_list.append(output_text)
+            output = '/n/n/n'.join(output_list)
+            output = output.replace('\n', '<br>')
             # テンプレートに入力テキストを渡してmemo.htmlを再レンダリング
-            return render(request, 'memo_file.html', {'input_text': input_text})
+            return render(request, 'memo_file.html', {'input_text': output})
         else:
             return HttpResponse('ファイルがアップロードされていません。', status=400)
     

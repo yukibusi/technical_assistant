@@ -86,8 +86,8 @@
         <!-- 入力されたテキストを表示 -->
         {% if input_text %}
         <div class="result">
-            <h3>アップロードされたテキスト:</h3>
-            <p>{{ input_text }}</p>
+            <h3>作成されたメモ:</h3>
+            {{ input_text | safe }}
         </div>
         {% endif %}
         
