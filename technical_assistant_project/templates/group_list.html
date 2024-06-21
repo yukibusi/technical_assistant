@@ -1,8 +1,112 @@
-
-<h2>My Groups</h2>
-<ul>
-{% for group in groups %}
-    <li>{{ group.name }} - <a href="{% url 'group_detail' group.id %}">View</a></li>
-{% endfor %}
-</ul>
-
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Resetting default margins */
+        body,
+        h1,
+        h2,
+        ul {
+          margin: 0;
+          padding: 0;
+        }
+        /* Basic styling */
+        body {
+          background-image: url(../static/images/index.png);
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+          background-color: #464646;
+  
+          font-family: Yu Gothic UI Semibold;
+          line-height: 1.6;
+          background-color: #f0f0f0;
+          padding: 50px;
+        }
+        h1 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        h2 {
+          text-align: center;
+          margin-bottom: 15px;
+        }
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+        li {
+          margin-bottom: 10px;
+        }
+        a {
+          text-decoration: none;
+          color: #333;
+          background-color: #fff;
+          padding: 10px 20px;
+          display: block;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          transition: background-color 0.3s ease;
+        }
+        a:hover {
+          background-color: #f0f0f0;
+        }
+        .logout-form {
+            display: inline-block;
+            margin: 0;
+        }
+        .btn-logout {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-logout:hover {
+            background-color: #5a6268;
+            color: white;
+        }
+        .link-right {
+          position: absolute;
+          top: 30px;
+          left: 30px;
+        }
+        .btn-custom {
+          display: button;
+          width: 100%;
+          padding: 5px;
+          font-size: 16px;
+          background-color: #fff;
+          border: none;
+          cursor: pointer;
+        }
+        .btn-custom:hover {
+            background-color: #777;
+            color: white;
+        }
+        .btn-container {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+        }
+    </style>
+</head>
+<body>
+<h1>My Groups</h1>
+    <div class="container">
+    <ul>
+    {% for group in groups %}
+        <li>{{ group.name }} - <a href="{% url 'group_detail' group.id %}">View</a></li>
+    {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

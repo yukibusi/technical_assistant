@@ -52,18 +52,18 @@
     }
 
     a:hover {
-      background-color: #f0f0f0;
+      background-color: #777;
+      color: white;
     }
 
     .logout {
       position: absolute;
       top: 30px;
-      right: 30px;
+      left: 30px;
     }
 
     .btn-logout {
-      background-color: #6c757d;
-      color: white;
+      background-color: #f0f0f0;
       border: none;
       padding: 10px 20px;
       font-size: 16px;
@@ -73,28 +73,30 @@
     }
 
     .btn-logout:hover {
-      background-color: #5a6268;
+      background-color: #777;
+      color: white;
     }
+
   </style>
 </head>
 <body>
   <div class="logout">
     <form action="{% url 'logout' %}" method="post" class="logout-form">
       {% csrf_token %}
-      <button type="submit" class="btn-logout">ログアウト</button>
+      <button type="submit" class="btn-logout link-right">Logout</button>
     </form>
   </div>
 
   <h1>Welcome to Technical Assistance</h1>
   <ul>
     <li>
-      <a href="{% url 'create_group' %}">チームを作成</a>
+      <a href="{% url 'create_group' %}">Create team</a>
     </li>
     <li>
-      <a href="{% url 'login_team' %}">チームにログイン</a>
+      <a href="{% url 'login_team' %}">Log in with your team</a>
     </li>
     <li>
-      <a href="{% url 'index' %}">ログインせずに使用</a>
+      <a href="{% url 'index' %}">Use without login</a>
     </li>
   </ul>
 </body>
