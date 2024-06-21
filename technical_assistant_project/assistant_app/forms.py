@@ -24,11 +24,19 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].help_text = ''
 
 class GroupForm(forms.ModelForm):
-    users = forms.ModelMultipleChoiceField(queryset=User.objects.all(), required=False)
+    users = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple,  # チェックボックス形式で複数選択
+        label="ユーザー"  # フィールドのラベルを日本語に変更
+    )
 
     class Meta:
         model = Group
         fields = ['name', 'users']
+        labels = {
+            'name': 'グループ名',  # フィールドのラベルを日本語に変更
+        }
 
 class GroupItemForm(forms.ModelForm):
     class Meta:

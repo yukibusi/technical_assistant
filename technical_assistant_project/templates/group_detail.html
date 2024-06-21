@@ -11,8 +11,7 @@
     <li>{{ item.name }}: {{ item.description }}</li>
   {% endfor %}
 </ul>
-<a href="{% url 'add_group_item' group.id %}">Add Item</a>
-<a href="{% url 'add_member' group.id %}">Add Members</a>
 {% if request.user == group.created_by %}
+  <a href="{% url 'add_member' group.id %}">Add Members</a>
   <a href="{% url 'remove_member' group.id %}">Remove Members</a>
 {% endif %}

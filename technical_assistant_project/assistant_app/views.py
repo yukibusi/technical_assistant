@@ -178,7 +178,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect('index')  # ログイン後にリダイレクトするURL
+            return redirect('home')  # ログイン後にリダイレクトするURL
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -189,6 +189,7 @@ def create_group(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             group = form.save(commit=False)
+            # group.users = request.user
             group.created_by = request.user
             team = group.name
             group.save()
@@ -200,7 +201,7 @@ def create_group(request):
             os.makedirs(database_dir)
             os.makedirs(formatted_memos_dir)
             request.session['team_name'] = team
-            return redirect('group_list')
+            return redirect('index')
     else:
         form = GroupForm()
     return render(request, 'create_group.html', {'form': form})
