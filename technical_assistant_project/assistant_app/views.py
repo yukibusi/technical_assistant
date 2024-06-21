@@ -39,15 +39,14 @@ def memo(request):
         question =  request.POST.get('input_text', '')  # Retrieve input text from POST data
         
         api_key = str(dotenv_values()["OPENAI_API_KEY"])
+        few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
 
         if 'team_name' in request.session:
             team = request.session['team_name']
-            few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt/')
             added_memo_file_names_dir = os.path.join(BASE_DIR, f'added_memo_file_names/{team}')
             database_dir = os.path.join(BASE_DIR, f'database/{team}')
             formatted_memos_dir = os.path.join(BASE_DIR, f'formatted_memos/{team}')
         else:
-            few_shot_path = os.path.join(BASE_DIR, 'assistant_app/utils/fewshot.txt')
             added_memo_file_names_dir = os.path.join(BASE_DIR, 'added_memo_file_names')
             database_dir = os.path.join(BASE_DIR, 'database')
             formatted_memos_dir = os.path.join(BASE_DIR, 'formatted_memos')
