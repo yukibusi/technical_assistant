@@ -1,84 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Git Issues</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-image: url(../static/images/index.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: #464646;
+    
+            font-family: Yu Gothic UI Semibold;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            padding: 50px;
         }
         .container {
-            background: #fff;
-            padding: 20px;
+            max-width: 800px;
+            margin: 130px auto;
+            background-color: #fff;
+            padding: 50px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
         }
+
         form {
             display: flex;
             flex-direction: column;
         }
-        form p {
-            margin-bottom: 15px;
+    
+        form label {
+            margin-top: 10px;
+            font-weight: bold;
         }
-        button {
+    
+        form input[type="text"],
+        form textarea {
+            width: 100%;
             padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             font-size: 16px;
+        }
+    
+        form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        button{
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #A5A5A5;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #007bff;
         }
-        .btn-secondary {
-            background-color: #6c757d;
+        .btn-custom {
+            display: button;
+            width: 15%;
+            padding: 5px;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
         }
-        .btn-secondary:hover {
-            background-color: #5a6268;
+        .btn-custom:hover {
+            background-color: #777;
+            color: white;
         }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+        .btn-container {
+            gap: 30px;
         }
     </style>
 </head>
 <body>
+    <h1>Git Issues</h1>
     <div class="container">
-        <h1>Git Issues</h1>
         <form method="post" action="{% url 'git_issues' %}">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Save</button>
         </form>
-        <div class="button-group">
-            <form method="get" action="{% url 'memo' %}">
-                <button type="submit" class="btn btn-secondary">メモを追加</button>
-            </form>
-            <form method="get" action="{% url 'index' %}">
-                <button type="submit" class="btn btn-secondary">インデックスへ戻る</button>
-            </form>
-            <form method="get" action="{% url 'issues_list' %}">
-                <button type="submit" class="btn btn-secondary">登録済みのリポジトリを確認する</button>
-            </form>
-        </div>
     </div>
+    <!-- インデックスへのリンク -->
+    <div class="d-flex justify-content-center mt-4 btn-container">
+        <a href="{% url 'memo' %}" class="btn btn-custom">Add memo</a>
+
+        <a href="{% url 'issues_list' %}" class="btn btn-custom">Check registered repositories</a>
+    </div>
+
+    <!-- 右上のリンク -->
+    <div class="position-relative m-4">
+        <a href="{% url 'index' %}" class="position-absolute top-0 start-0 btn btn-secondary link-right">Back index</a>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@
         line-height: 1.6;
         background-color: #f0f0f0;
         padding: 50px;
-    }
+      }
       h1 {
         text-align: center;
         margin-bottom: 20px;
@@ -55,20 +55,28 @@
       a:hover {
         background-color: #f0f0f0;
       }
-      .logout-link {
-        position: absolute;
-        top: 20px;
-        right: 20px;
+      .logout-form {
+          display: inline-block;
+          margin: 0;
+      }
+      .btn-logout {
+          background-color: #6c757d;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          font-size: 16px;
+          border-radius: 5px;
+          cursor: pointer;
+          text-decoration: none;
+      }
+      .btn-logout:hover {
+          background-color: #5a6268;
+          color: white;
       }
     </style>
   </head>
   <body>
     <h1>Welcome to Technical Assistance</h1>
-    <!-- ログアウトフォーム -->
-    <form method="post" action="{% url 'logout' %}" class="logout-link">
-      {% csrf_token %}
-      <button type="submit">logout</button>
-    </form>
     <ul>
       <li>
         <h2>Memo</h2>
@@ -100,5 +108,10 @@
         margin: 0 10px;
       }
     </style>
+    <!-- ログアウトフォーム -->
+    <form method="post" action="{% url 'logout' %}" class="logout-form">
+      {% csrf_token %}
+      <button type="submit" class="btn-logout">logout</button>
+    </form>
   </body>
 </html>

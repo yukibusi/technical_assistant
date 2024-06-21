@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>リポジトリ一覧</title>
+    <title>Repository List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
+            background-image: url(../static/images/index.png);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: #464646;
+    
+            font-family: Yu Gothic UI Semibold;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            padding: 50px;
         }
         h1 {
-            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
         }
         ul {
             list-style-type: none;
@@ -31,24 +41,68 @@
         a:hover {
             text-decoration: underline;
         }
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #A5A5A5;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #007bff;
+        }
+        .btn-custom {
+            display: button;
+            width: 15%;
+            padding: 5px;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+        .btn-custom:hover {
+            background-color: #777;
+            color: white;
+        }
+        .btn-container {
+            gap: 30px;
+        }
+        .custom-width-list {
+            width: 1000px;
+            margin: 0 auto; /* リストを中央に配置 */
+        }
+        .custom-width-list a {
+            display: block; /* リンク全体をクリック可能にする */
+            width: 100%; /* リンクの横幅をリストの横幅に合わせる */
+            padding: 8px 0; /* リンクに適度なパディングを追加 */
+        }
+        </style>
+        
     </style>
 </head>
 <body>
-    <h1>リポジトリ一覧</h1>
-    <ul>
+    <h1>Repository List</h1>
+    <ul class="custom-width-list">
         {% for item in object_list %}
             <li>
                 <a href="{{ item.repo_url }}" target="_blank">{{ item.repo }}</a>
             </li>
         {% endfor %}
     </ul>
-    <div class="button-group">
-        <form method="get" action="{% url 'git_issues' %}">
-            <button type="submit" class="btn btn-secondary">リポジトリを追加</button>
-        </form>
-        <form method="get" action="{% url 'index' %}">
-            <button type="submit" class="btn btn-secondary">インデックスへ戻る</button>
-        </form>
+    
+    <div class="d-flex justify-content-center mt-4 btn-container">
+        <a href="{% url 'memo' %}" class="btn btn-custom">Add Repository</a>
     </div>
+
+    <!-- 右上のリンク -->
+    <a href="{% url 'index' %}" class="btn btn-secondary link-right">Back index</a>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
