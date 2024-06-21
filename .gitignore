@@ -42,3 +42,5 @@ make_note/output.out
 # Ignore specific directories
 technical_assistant_project/assistant_app/__pycache__/
 technical_assistant_project/assistant_app/migrations/
+technical_assistant_project/assistant_app/__pycache__/
+technical_assistant_project/technical_assistant_project/__pycache__/
