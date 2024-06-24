@@ -12,6 +12,7 @@
 * ある程度のサポートは可能だが、各々のチーム毎にあった環境に対応するサービスは少ない上、Chat GPT等に質問しても完全な解答がかえってくるとは限りません。
 * そこで開発時のトラブルをGitHubのissueなどを有効的に参照することで、より迅速かつ正確な解答をエンジニアに提供可能になります。
 * そのためにRAGとLang Chainいう技術を用います。
+* また、これらの実装のためにwebアプリケーションのフレームワークであるDjangoを使用しました。
 
 # 必要なライブラリ
 
@@ -26,6 +27,7 @@
 * langchain_text_splitters
 * dotenv 
 * requests
+* Django
 
 # インストール方法
 
@@ -42,19 +44,23 @@ pip install langchain_openai
 pip install langchain_text_splitters
 pip install dotenv 
 pip install requests
+pip install Django
 ```
 
 # 使用方法
-
-実行方法など、基本的な使い方の説明(適宜埋めていく)
-
-コードの例
+アプリを立ち上げる場合
 
 ```bash
 git clone https://github.com/hoge/~
-cd examples
-python demo.py
+cd technical_assistant_project/
+mkdir added_memo_file_names
+mkdir formatted_memos
+python manage.py runserver
 ```
+
+アプリ上で使われている機能は
+technical_assistant_project/assistant_app/utils/
+にpythonファイルが保存されています。
 
 # 注意
 
