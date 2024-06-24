@@ -64,7 +64,7 @@ technical_assistant_project/assistant_app/utils/
 
 # 注意
 
-git issueからメモを作成する際、git issueの数が多い場合、エラーが出る可能性があります。
+git issueからメモを作成する際、git issueの数が多い場合はエラーが出る可能性があります。
 
 # 著者
 
