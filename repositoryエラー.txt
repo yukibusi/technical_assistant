@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/team1/technical_assistant/make_note/make_note/issues.py", line 60, in <module>
+    comments = get_text_from_issue(repo)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/team1/technical_assistant/make_note/make_note/issues.py", line 48, in get_text_from_issue
+    issues = _get_all_issues(repo)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/team1/technical_assistant/make_note/make_note/issues.py", line 15, in _get_all_issues
+    response.raise_for_status()
+  File "/home/ubuntu/myenv3_11/lib/python3.11/site-packages/requests/models.py", line 1024, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://api.github.com/repos/deep-learning-from-scratch/issues?state=closed&per_page=100&page=1
+
+解決策：
+owner/repositoryの形でget_text_from_issueに引数として渡してください。
