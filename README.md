@@ -33,7 +33,7 @@
 
 
 ```bash
-pip install bs4
+pip install BeautifulSoup4
 pip install langchain
 pip install langchain_chroma
 pip install langchain_community
