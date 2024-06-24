@@ -56,14 +56,15 @@
       color: white;
     }
 
-    .logout {
+    .link-right {
       position: absolute;
       top: 30px;
       left: 30px;
     }
 
     .btn-logout {
-      background-color: #f0f0f0;
+      background-color: #6c757d;
+      color: white;
       border: none;
       padding: 10px 20px;
       font-size: 16px;
@@ -71,21 +72,18 @@
       cursor: pointer;
       text-decoration: none;
     }
-
-    .btn-logout:hover {
-      background-color: #777;
+  .btn-logout:hover {
+      background-color: #5a6268;
       color: white;
     }
 
   </style>
 </head>
 <body>
-  <div class="logout">
-    <form action="{% url 'logout' %}" method="post" class="logout-form">
-      {% csrf_token %}
-      <button type="submit" class="btn-logout link-right">Logout</button>
-    </form>
-  </div>
+  <form method="post" action="{% url 'logout' %}" class="logout-form">
+    {% csrf_token %}
+    <button type="submit" class="btn-logout link-right">Logout</button>
+  </form>
 
   <h1>Welcome to Technical Assistance</h1>
   <ul>
@@ -93,10 +91,10 @@
       <a href="{% url 'create_group' %}">Create team</a>
     </li>
     <li>
-      <a href="{% url 'login_team' %}">Log in with your team</a>
+      <a href="{% url 'login_team' %}">Login with your team</a>
     </li>
     <li>
-      <a href="{% url 'index' %}">Use without login</a>
+      <a href="{% url 'index' %}">Start without team</a>
     </li>
   </ul>
 </body>

@@ -38,7 +38,6 @@
             max-width: 600px;
             margin: 0 auto;
             background-color: #fff;
-            {% comment %} padding: 30px; {% endcomment %}
             border-radius: 5px;
             margin-bottom: 20px;
         }
@@ -74,17 +73,41 @@
             background-color: #007bff;
         }
         .result {
+            width: 95%;
             margin: 0 auto;
-            padding: 15px;
+            padding: 10px;
             border-radius: 4px;
             background-color: #f0f0f0;
-            width: 78%;
             font-size: 16px;
         }
         .link-right {
             position: absolute;
             top: 30px;
             left: 30px;
+        }
+        .home-form {
+            display: inline-block;
+            margin: 0;
+        }
+        .btn-home {
+            width: 10%;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-home:hover {
+            background-color: #5a6268;
+            color: white;
+        }
+        .link-right2 {
+          position: absolute;
+          top: 80px;
+          left: 30px;
         }
     </style>
 </head>
@@ -96,7 +119,7 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="input_text">Please enter text:</label>
-                <input type="text" id="input_text" name="input_text" class="form-control">
+                <textarea id="input_text" name="input_text" class="form-control"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Send</button>
         </form>
@@ -112,6 +135,11 @@
 
     <!-- 右上のリンク -->
     <a href="{% url 'index' %}" class="btn btn-secondary link-right">Back index</a>
+
+    {% comment %} <form method="post" action="{% url 'home' %}" class="home-form">
+        {% csrf_token %}
+        <button type="submit" class="btn-home link-right2">Home</button>
+    </form> {% endcomment %}
 
     <!-- Bootstrap JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
