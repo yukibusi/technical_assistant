@@ -18,7 +18,7 @@
 
 必要なライブラリは以下の通りです
 
-* bs4
+* BeautifulSoup4
 * langchain
 * langchain_chroma
 * langchain_community
