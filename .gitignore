@@ -4,9 +4,9 @@
 memo_database/
 added_memo_file_names/
 .env
-technical_assistant_project/added_memo_file_names/
+# technical_assistant_project/added_memo_file_names/
 technical_assistant_project/database/
-technical_assistant_project/formatted_memos/
+# technical_assistant_project/formatted_memos/
 models/test.py
 make_note/make_note/output.txt
 technical_assistant_project/assistant_app/__pycache__/admin.cpython-312.pyc
