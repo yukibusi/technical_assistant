@@ -64,13 +64,3 @@ technical_assistant_project/assistant_app/utils/
 
 git issueからメモを作成する際、git issueの数が多い場合はエラーが出る可能性があります。
 
-# 著者
-
-作成情報を列挙する
-
-* 作成者
-* 所属
-* E-mail
-
-# ライセンス
-ライセンスを明示する
